@@ -1,4 +1,4 @@
-package serikov.dmitrii.lister;
+package serikov.dmitrii;
 
 import com.google.appengine.api.utils.SystemProperty;
 

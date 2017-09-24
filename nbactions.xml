@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
     <action>
-       <actionName>CUSTOM-appengine:run</actionName>
-        <displayName>appengine:run</displayName>
+       <actionName>CUSTOM-appengine:devappserver</actionName>
+        <displayName>appengine:devappserver</displayName>
         <goals>
-            <goal>appengine:run</goal>
+            <goal>appengine:devappserver</goal>
         </goals>
     </action>
     <action>
-        <actionName>CUSTOM-appengine:deploy</actionName>
-        <displayName>appengine:deploy</displayName>
+        <actionName>CUSTOM-appengine:update</actionName>
+        <displayName>appengine:update</displayName>
         <goals>
-            <goal>appengine:deploy</goal>
+            <goal>appengine:update</goal>
         </goals>
     </action>
 </actions>

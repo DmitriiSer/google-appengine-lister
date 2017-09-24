@@ -21,11 +21,11 @@ detailed instructions.
 ## Maven
 ### Running locally
 
-    mvn appengine:run
+    mvn appengine:devserver
 
 ### Deploying
 
-    mvn appengine:deploy
+    mvn appengine:update
 
 ## Testing
 
