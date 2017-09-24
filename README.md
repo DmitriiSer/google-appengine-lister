@@ -1,15 +1,16 @@
 google-appengine-lister
 =======================
 
+[appengine]: https://cloud.google.com/appengine/
+[gcloud]: https://cloud.google.com/
+[applink]: https://hybrid-shelter-180902.appspot.com/
+
 This is the Lister project migrated to Google Cloud Platform App Engine.
 
 See the [Google App Engine standard environment documentation][appengine] for more
 detailed instructions.
 
-[appengine]: https://cloud.google.com/appengine/
-[gcloud]: https://cloud.google.com/
-
-## [Demo] (Deployed using [Google Cloud Platform][gcloud])
+## [Demo][applink] (Deployed using [Google Cloud Platform][gcloud])
 
 ## Maven
 ### Running locally
