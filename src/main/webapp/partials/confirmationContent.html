@@ -1,0 +1,9 @@
+<script type="text/ng-template" id="confirmationWindow">
+    <div class="modal-body no-select">
+        <h5>{{message}}</h5>
+    </div>
+    <div class="modal-footer" ng-enter-key="confirmationYes()">
+        <button class="btn btn-danger" type="button" ng-click="confirmationYes()" autofocus>Yes</button>
+        <button class="btn btn-link" type="button" ng-click="confirmationNo()">No</button>
+    </div>
+</script>

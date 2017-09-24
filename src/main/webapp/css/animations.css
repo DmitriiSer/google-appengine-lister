@@ -1,0 +1,58 @@
+#home-view {
+}
+//TODO: change animation for 'home' state to something else or disable it at all
+#home-view.ng-enter, #home-view.ng-leave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-transition: all 5s ease-in-out;
+    -moz-transition:    all 5s ease-in-out;
+    -o-transition:      all 5s ease-in-out;
+    transition:         all 5s ease-in-out;
+}
+#home-view.ng-enter {
+    opacity: 0;
+    -webkit-transform:  none;/*scale3d(0.5, 0.5, 0.5);*/
+    -moz-transform:     none;/*scale3d(0.5, 0.5, 0.5);*/
+    transform:          none;/*scale3d(0.5, 0.5, 0.5);*/
+}
+#home-view.ng-enter-active {
+    opacity: 1;
+    -webkit-transform:  none;/*scale3d(1, 1, 1);*/
+    -moz-transform:     none;/*scale3d(1, 1, 1);*/
+    transform:          none;/*scale3d(1, 1, 1);*/
+}
+#home-view.ng-leave {
+    opacity: 1;
+    -webkit-transform:  none;/*translate3d(0, 0, 0);*/
+    -moz-transform:     none;/*translate3d(0, 0, 0);*/
+    transform:          none;/*translate3d(0, 0, 0);*/
+}
+#home-view.ng-leave-active {
+    opacity: 0;
+    -webkit-transform:  none;/*translate3d(100px, 0, 0);*/
+    -moz-transform:     none;/*translate3d(100px, 0, 0);*/
+    transform:          none;/*translate3d(100px, 0, 0);*/
+}
+
+.list-title-btn.ng-enter,
+.list-title-plus-btn.ng-enter {
+    -webkit-animation:  fadeInRight 100ms;
+    animation:          fadeInRight 100ms;
+}
+.list-title-btn.ng-enter-stagger,
+.list-title-plus-btn.ng-enter-stagger {
+    -webkit-animation-delay:    50ms;
+    animation-delay:            50ms;
+    -webkit-animation-duration: 0;
+    animation-duration:         0;
+}
+
+//Scale-In Animation
+.slide-in-up { opacity: 0; }
+.slide-in-up.ng-enter, .slide-in-up > .ng-enter {
+  /*transition: all cubic-bezier(.1, .7, .1, 1) 500ms;*/
+  transition-duration: 500ms;
+}
+.slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active { opacity: 1; }
+.slide-in-up.ng-leave, .slide-in-up > .ng-leave { transition: all ease-out 50ms; }

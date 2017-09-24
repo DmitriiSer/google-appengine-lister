@@ -1,0 +1,154 @@
+<!-- list editor elements -->
+<!-- header section -->
+<section class="no-select" id="list-editor-window-header"
+         ng-mouseenter="cursorIsAboveTheHeader = true"
+         ng-mouseleave="cursorIsAboveTheHeader = (heaaderInputIsActive) ? true : false">
+    <!--ng-show="headerClicked"-->
+    <input type="text" id="list-editor-window-header-input" placeholder="List title:"
+           ng-model="currentList.name"
+           ng-focus="heaaderInputIsActive = true"
+           ng-blur="heaaderInputIsActive = false; cursorIsAboveTheHeader = false"
+           ng-keypress="($event.which === 13) ? headerClicked = false : ''"
+           ng-focus-on-show="500"/>
+    <a href class="animate-show fast" id="list-editor-window-header-delete-btn"
+       on-tap="$root.removeList(listname)"
+       ng-show="cursorIsAboveTheHeader">
+        <i class="fast fa fa-minus-circle" aria-hidden="true"></i>
+    </a>
+    <hr/>
+</section>
+<!-- main edit section -->
+<section id="list-editor-window-body">
+    <!-- simple list / textarea -->
+    <textarea id="list-editor-window-text"
+              style="padding: 0 !important; border: none;"
+              ng-style="{textAlign: textAlign, cursor: textareaCursor}"
+              ng-model="currentList.listBody"
+              ng-change="changeTextarea()"
+              ng-focus="disableScrolling()"
+              ng-blur="enableScrolling()"
+              ng-scroll="scrollTextarea($event)"
+              ng-show="currentList.type == 'simple' ? true : false">
+    </textarea>
+    <!-- checklist, simple_table OR checklist_table -->
+    <!-- TODO: make columns resizable -->
+    <table class="table" id="list-editor-window-table" ng-show="currentList.type != 'simple' ? true : false"
+           style="padding: 0 !important; border: none;">
+        <!-- table headings if shown -->
+        <thead>
+            <tr id="list-editor-window-table-headings"
+                ng-show="data.headings.length > 1">
+                <th ng-style="{display: checkboxesColumnDisplay}"></th>
+                <th title="Double click to change column title"
+                    ng-dblclick="editHeadings = !editHeadings"
+                    ng-repeat="headingTitle in data.headings track by $index">
+                    <span ng-hide="editHeadings">{{headingTitle}}</span>
+                    <input ng-keydown="$event.keyCode == 13 ? editHeadings = !editHeadings : ''"
+                           ng-model="headingTitle"
+                           ng-change="changeHeading(headingTitle, $index)"
+                           ng-show="editHeadings"/>
+                </th>
+            </tr>
+        </thead>
+        <!-- checklist/table body -->
+        <tbody>
+            <tr ng-repeat="text in mainColumnData track by $index"
+                ng-class="{tableRowBorder: currentList.type.includes('table')}">
+                <!-- checkbox td -->
+                <td class="list-editor-window-checkboxes-column no-select"
+                    ng-class="{checkboxCellBorder: currentList.type.includes('table')}"
+                    ng-style="{display: checkboxesColumnDisplay}">
+                    <!-- ng-class="{checkboxCellBorder: additionalColumnsData.length > 0}" -->
+                    <div class="list-editor-window-checkbox">
+                        <!--ng-repeat="checked in checkboxColumnData track by $index"-->
+                        <a ng-click="changeCheckboxStatus($index)"
+                           ng-class="{marked : data.body[$index].checked}">
+                            <i class="fa fa-{{data.body[$index].checked ? checkboxIcon : checkboxIconUnchecked}}" aria-label="Checkbox"></i>
+                        </a>
+                        <!--<hr class="strikethrough" 
+                            ng-style="{ display: data.body[$index].checked ? 'block' : 'none', width: calculateTextareaWidth()}">-->
+                    </div>
+                </td>
+                <!-- main area td -->
+                <td class="list-editor-window-text-column"
+                    ng-class="{mainCellBorder: currentList.type.includes('table')}">
+                    <input ng-change="changeInput()"
+                           ng-model="data.body[$index].text"
+                           ng-class="{'marked lineThrough' : data.body[$index].checked}"
+                           ng-enter-key="changeInputEnterKey($event, $index); $event.stopPropagation();"/>
+                    <!--ng-click="textareaMouseleave()"
+                    ng-mousemove="textareaMousemove($event)"
+                    ng-mouseleave="textareaMouseleave()"-->
+                </td>
+                <!-- additional td(s) -->
+                <td class="list-editor-window-additional-column"
+                    ng-class="currentColumn = 'ad' + $index"
+                    ng-repeat="column in additionalColumnsData track by $index">
+                    <!-- ng-style="{display: currentList.type.includes('table') ? 'table-cell' : 'none' }" -->
+                    <div class="list-editor-window-additional-item">
+                        <!--ng-repeat="item in column track by $index"-->
+                        <input ng-change="changeAdditional(column[$parent.$index], $parent.$index, currentColumn)"
+                               ng-model="column[$parent.$index]"
+                               ng-class="{'marked lineThrough' : data.body[$parent.$index].checked}"/>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<!-- toolbar(s) section -->
+<section id="list-editor-window-body-toolbar-section">
+    <!-- right side toolbar -->
+    <div id="list-editor-window-side-toolbar" ng-mouseleave="toolbarLeave()">
+        <div align="center">
+            <a href=""
+               class="{{item.icon.length == 0 ? 'separator':''}}" title="{{item.title}}"
+               ng-class="{active: item.state}"
+               ng-click="toolbarClick(item.icon)"
+               ng-mouseenter="hideSubmenu = true"
+               ng-mouseenter-delayed="toolbarMouseenterDelayed(item, $index)"
+               ng-repeat="item in toolboxIcons">
+                <i class="fa fa-fw fa-{{item.icon}}" aria-label="{{item.title}}" style="color: {{item.color}}"></i>
+                <!--<span class="fa-stack">                                
+                    <i class="fa fa-{{item.icon2}} fa-stack-1x" aria-label="{{item.title}}" ng-show="item.icon2" style="color: {{item.color2}}; text-align: right"></i>
+                </span>-->
+            </a>
+        </div>
+        <!-- sliding submenu toolbar -->
+        <div id="list-editor-window-side-toolbar-submenu"
+             ng-mouseenter="submenuEnter();"
+             ng-mouseleave="submenuLeave()"
+             ng-style="{top : submenuTop}"
+             ng-show="submenuData.length > 0 || hideSubmenu">
+            <a ng-repeat="submenuItem in submenuData"
+               ng-mouseenter="hideSubmenu = false"
+               ng-mouseleave="hideSubmenu = true"
+               on-tap="submenuClick(submenuItem)">
+                <i class="fa fa-fw fa-{{submenuItem.icon}}" aria-label="{{submenuItem.title}}"></i>
+            </a>
+        </div>
+    </div>
+    <!-- floating toolbox -->
+    <!-- <div class="animate-show fast" id="list-editor-window-cursor-toolbar"
+         ng-style="{ display: toolboxDisplay, left: textareaMousePosition.x, top: textareaMousePosition.y}"
+         ng-mouseleave="toolboxMouseleave()"
+         ng-show="showToolbox">
+        <a class="{{item.icon.length == 0 ? 'separator':''}}" title="{{item.title}}"
+           ng-class="{active: item.state}"
+           ng-repeat="item in toolboxIcons"           
+           ng-click="toolboxClick(item.icon)">
+            <i class="fa fa-{{item.icon}}" aria-label="{{item.title}}"></i>
+            <span ng-bind-html="item.content"></span>
+        </a>
+    </div>
+    -->
+</section>
+<!-- footer section -->
+<section class="no-select" id="list-editor-window-footer">
+    <hr/>
+    <div id="list-editor-window-submit-container">
+        <button type="button" id="list-editor-window-submit" title="123" ng-click="submit()">
+            <i class="fa fa-check"></i>
+        </button>
+    </div>
+</section>

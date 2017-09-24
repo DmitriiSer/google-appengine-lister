@@ -1,0 +1,26 @@
+<!--list editor window with scrolling for desktop view-->
+<script type="text/ng-template" id="listEditorWindow">
+    <ion-modal-view>
+        <ion-content id="list-editor-content"
+            delegate-handle="list-editor-content"
+            scrollbar-y="false"
+            ng-enter-key="keydownCtrlEnterShortcut($event); $event.stopPropagation();"
+            ng-enter-as-tab>
+                <ion-refresher pulling-icon="ion-close-round" on-refresh="pullToClose()"></ion-refresher>
+                <list-editor-content></list-editor-content>
+        </ion-content>
+    </ion-modal-view>
+</script>
+<!--list editor window without scrolling for mobile view-->
+<script type="text/ng-template" id="listEditorWindowNoScroll">
+    <ion-modal-view ng-enter-key="keydownCtrlEnterShortcut($event); $event.stopPropagation();">
+        <!--<ion-content id="list-editor-content"
+            class="no-border" style="z-index: 1060"
+            scrollbar-y="false"
+            ng-keydown="keydownCtrlEnterShortcut($event); $event.stopPropagation();"
+            ng-enter-as-tab>
+                <ion-refresher pulling-icon="ion-close-round" on-refresh="pullToClose()"></ion-refresher>
+        </ion-content>-->
+        <list-editor-content id="list-editor-content"></list-editor-content>
+    </ion-modal-view>
+</script>

@@ -1,0 +1,272 @@
+/* 
+    Created on : Oct 6, 2015, 8:13:58 AM
+    Author     : dmitr
+*/
+.center-modal {
+    position: fixed;
+    top: 15%;
+    left: 18.5%;
+    z-index: 1050;
+    width: 80%;
+    height: 70%;
+    margin-left: -10%;
+}
+#list-title-container {
+    position: relative;
+    height: calc(100vh - 67px - 21px);
+    overflow-y: auto;
+    z-index: auto;
+}
+#list-title-container .list-title-btn {
+    position: relative;
+    padding: 0px;
+    background: rgba(124, 205, 124, 0.5);
+    color: #F0FFF0;
+    text-shadow: 0px 2px 5px red, 0px -2px 5px red;
+    font-family: 'Open Sans Condensed', cursive;
+    /*font-size: 18px;*/
+    line-height: 1.5;
+    border-color: transparent;
+    border-radius: 8px;
+    -webkit-box-shadow: -1px 1px 15px 0px black;
+    -moz-box-shadow:    -1px 1px 15px 0px black;
+    box-shadow:         -1px 1px 15px 0px black;
+    z-index: auto;
+    /*overflow: hidden;*/
+    /* animation */
+    -webkit-transition: all 0.4s, font-size 0.8s;
+    -moz-transition:    all 0.4s, font-size 0.8s;
+    -o-transition:      all 0.4s, font-size 0.8s;
+    transition:         all 0.4s, font-size 0.8s;
+}
+#list-title-container .list-title-btn.ng-move,
+#list-title-container .list-title-btn.ng-enter,
+#list-title-container .list-title-btn.ng-leave {
+    transition:         all linear 1s;
+}
+#list-title-container .list-title-btn.ng-move,
+#list-title-container .list-title-btn.ng-leave.ng-leave-active,
+#list-title-container .list-title-btn.ng-enter {
+    opacity: 0;
+}
+#list-title-container .list-title-btn.ng-leave,
+#list-title-container .list-title-btn.ng-move.ng-move-active,
+#list-title-container .list-title-btn.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+#list-title-container .list-title-btn:first-child { margin-left: 15px; }
+#list-title-container .list-title-btn:active {
+    /*background: rgb(144, 238, 144);*/
+    background: transparent;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+#list-title-container .list-title-btn-icon {
+    display: inline-block;
+    margin: 10px auto;
+    color: rgb(144, 238, 144);
+    color: rgb(124, 205, 124);
+    color: #F0FFF0;
+    /*text-shadow: 0px 0px 15px black;*/
+    text-shadow: 0px 0px 5px red;
+    font-size: 6rem;
+    z-index: auto;
+}
+#list-title-container .list-title-btn-title {
+    position: absolute;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    bottom: 0;
+    background: rgba(0,0,0,0.2);
+    text-shadow: none;
+    z-index: auto;
+    overflow: hidden;
+}
+#list-title-container .list-title-btn-delete {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0px 5px;
+    color: #F0FFF0;
+    background: rgba(0,0,0,0.4);
+    border: none;
+    border-bottom-right-radius: 3px;
+    outline: none;
+    z-index: auto;
+}
+#list-title-container .list-title-btn-delete > i {
+    /* animation */
+    -webkit-transition: -webkit-transform 0.8s;
+    -moz-transition:    -moz-transform 0.8s;
+    -o-transition:      -o-transform 0.6s;
+    transition:         transform 0.4s;
+}
+.no-touchevents #list-title-container .list-title-btn-delete > i:hover,
+.no-touchevents #list-title-container .list-title-btn-delete > i:focus {
+    -webkit-transform: scale(1.4);
+    -moz-transform:    scale(1.4);
+    -o-transform:      scale(1.4);
+    transform:         scale(1.4);
+}
+@media only screen and (max-width: 479px) {
+    #list-title-container .list-title-btn {
+        width: 30.66666%;
+        height: 25vw;
+        margin: 1%;
+        border: none;
+        border-radius: 2px;
+        /* animation */
+        -webkit-transition: all 0.3s;
+        -moz-transition:    all 0.3s;
+        -o-transition:      all 0.3s;
+        transition:         all 0.3s;
+    }
+    #list-title-container .list-title-btn:nth-child(3n+1) { margin-left: 2%; }
+    .no-touchevents #list-title-container .list-title-btn:hover,
+    .no-touchevents #list-title-container .list-title-btn:focus {
+        -webkit-transform: scale(1.1);
+        -moz-transform:    scale(1.1);
+        -o-transform:      scale(1.1);
+        transform:         scale(1.1);
+    }
+    #list-title-container .list-title-btn-icon { font-size: 15vmin; }
+    #list-title-container .list-title-btn-title, #list-title-container .list-title-btn-delete {
+        font-size: 4vw;
+        font-weight: 700;
+    }
+}
+@media only screen and (min-width: 480px) and (max-width: 1024px) {
+    #list-title-container .list-title-btn {
+        width: 22.5%;        
+        height: 100px;
+        margin: 1%;
+        border: none;
+        border-radius: 2px;
+        /* animation */
+        -webkit-transition: -webkit-transform 0.2s linear;
+        -moz-transition:    -moz-transform 0.2s linear;
+        -o-transition:      -o-transform 0.2s linear;
+        transition:         transform 0.2s linear;
+    }
+    #list-title-container .list-title-btn:nth-child(4n+1) { margin-left: 2%; }
+    .no-touchevents #list-title-container .list-title-btn:hover,
+    .no-touchevents #list-title-container .list-title-btn:focus {
+        -webkit-transform: scale(1.1);
+        -moz-transform:    scale(1.1);
+        -o-transform:      scale(1.1);
+        transform:         scale(1.1);
+    }
+    #list-title-container .list-title-btn-icon {
+        font-size: 7rem;
+        margin-top: 5px;
+        /*line-height: 3rem;*/
+    }
+    #list-title-container .list-title-btn-title, #list-title-container .list-title-btn-delete {
+        font-size: 1.9rem;
+        font-weight: 400;
+        text-shadow: 0px 0px 2px black;
+    }
+}
+@media only screen and (min-width: 1025px) {
+    #list-title-container .list-title-btn {
+        width: 100px;
+        margin: 0 1px;
+        text-shadow: 0px 0px 3px red;
+        border-radius: 0px 0px 2px 2px;
+    }
+    #list-title-container ion-list ion-item {
+        padding: 1px 5px;
+    }
+    #list-title-container .list-title-btn:first-child { margin-left: 15px; }
+    #list-title-container .list-title-btn-icon { display: none; }
+    #list-title-container .list-title-btn-title {
+        position: relative;
+        background: transparent;
+    }
+    #list-title-container .list-title-btn-title, #list-title-container .list-title-btn-delete {
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    #list-title-container .list-title-btn-delete {
+        top: 0;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+}
+/************************************************************************/
+#list-title-plus-btn {
+    position: absolute;
+    top: 0;
+    right: 0;    
+    bottom: 0;
+    left: 0;
+    margin: 23vh 30vw;
+    width: 40%;
+    height: calc(54vh - 67px - 21px);
+    color: #F0FFF0;
+    text-align: center;
+    vertical-align: bottom;
+    text-shadow: 0px 0px 3px red;
+}
+#list-title-plus-btn > i.big {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 50vmin;
+    text-shadow: none;
+    /* animation */
+    -webkit-transition: -webkit-transform 0.8s ease;
+    -moz-transition:    -moz-transform 0.8s ease;
+    -o-transition:      -o-transform 0.8s ease;
+    transition:         transform 0.8s ease;
+}
+.no-touchevents #list-title-plus-btn > i:hover,
+.no-touchevents #list-title-plus-btn > i:focus {
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+#list-title-plus-btn > i:not(:hover) {
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+#list-title-container ion-list ion-item, #list-title-container ion-list ion-item .item-content {
+    position: static;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    z-index: auto;
+}
+.no-touchevents #list-title-container ion-list ion-item:hover,
+.no-touchevents #list-title-container ion-list ion-item:focus {
+    background: rgba(144, 238, 144, 0.5);
+    border-color: darkgreen;
+    -webkit-box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+#list-title-container ion-list ion-item:active,
+#list-title-container ion-list ion-item.dragging {
+    padding: 0;
+    background: rgba(144, 238, 144, 0.5);
+    border-color: darkgreen;
+    border-radius: 2px;
+    -webkit-box-shadow: -1px 1px 15px 0px black;
+    -moz-box-shadow:    -1px 1px 15px 0px black;
+    box-shadow:         -1px 1px 15px 0px black;
+}
+#list-title-container .list-title-btn.drag-enter {
+    -webkit-box-shadow: inset -1px 1px 15px 0px black;
+    -moz-box-shadow:    inset -1px 1px 15px 0px black;
+    box-shadow:         inset -1px 1px 15px 0px black;
+    /* animation */
+    -webkit-transition: -webkit-transform 2s;
+    -moz-transition:    -moz-transform 2s;
+    -ms-transition:     -ms-transform 2s;
+    -o-transition:      -o-transform 2s;
+    transition:         transform 2s;
+}
