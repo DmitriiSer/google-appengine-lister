@@ -1,22 +1,15 @@
-appengine-skeleton
-==================
+google-appengine-lister
+=======================
 
-This is a generated application from the appengine-skeleton archetype.
+This is the Lister project migrated to Google Cloud Platform App Engine.
 
-See the [Google App Engine standard environment documentation][ae-docs] for more
+See the [Google App Engine standard environment documentation][appengine] for more
 detailed instructions.
 
-[ae-docs]: https://cloud.google.com/appengine/docs/java/
+[appengine]: https://cloud.google.com/appengine/
+[gcloud]: https://cloud.google.com/
 
-
-* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [Maven](https://maven.apache.org/download.cgi) (at least 3.5)
-* [Google Cloud SDK](https://cloud.google.com/sdk/) (aka gcloud)
-
-## Setup
-
-    gcloud init
-    gcloud auth application-default login
+## [Demo] (Deployed using [Google Cloud Platform][gcloud])
 
 ## Maven
 ### Running locally
