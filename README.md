@@ -4,6 +4,7 @@ google-appengine-lister
 [appengine]: https://cloud.google.com/appengine/
 [gcloud]: https://cloud.google.com/
 [applink]: https://hybrid-shelter-180902.appspot.com/
+[versions-plugin]: http://www.mojohaus.org/versions-maven-plugin/
 
 This is the Lister project migrated to Google Cloud Platform App Engine.
 
@@ -46,4 +47,3 @@ for Java 7.
 
 Our usual process is to test, update the versions, then test again before committing back.
 
-[plugin]: http://www.mojohaus.org/versions-maven-plugin/
