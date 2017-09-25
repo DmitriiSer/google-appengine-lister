@@ -16,10 +16,17 @@ import org.apache.logging.log4j.Logger;
 import serikov.dmitrii.servlets.UserProfile;
 
 /**
- * @author dmitr
+ * @author Dmitrii Serikov
  */
 public class DBUtils {
 	private static final Logger logger = LogManager.getLogger(DBUtils.class);
+
+	private final static String MYSQL_CLUSTER_IP = System.getenv("MYSQL_CLUSTER_IP");
+	private final static String MYSQL_DATABASE = System.getenv("MYSQL_DATABASE");
+	private final static String MYSQL_PORT = "3306";
+	private final static String MYSQL_USER = System.getenv("MYSQL_USER");
+	private final static String MYSQL_PASSWORD = System.getenv("MYSQL_PASSWORD");
+
 	private static Connection con = null;
 
 	public static boolean loadDriver() {
@@ -39,15 +46,17 @@ public class DBUtils {
 			// trying to connect to local database
 			try {
 				// Localhost database connection
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lister", "root", "root");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/" + MYSQL_DATABASE, "root",
+						"root");
 			} catch (SQLException ex1) {
 				// trying to connect to remote
 				// (http://lister-advancedlists.rhcloud.com/) database
 				try {
 					// Remote "http://lister-advancedlists.rhcloud.com/"
 					// database connectipn
-					con = DriverManager.getConnection("jdbc:mysql://127.12.206.2:3306/lister", "admintxyeVtZ",
-							"R9AGStuM75FE");
+					con = DriverManager.getConnection(
+							"jdbc:mysql://" + MYSQL_CLUSTER_IP + ":" + MYSQL_PORT + "/" + MYSQL_DATABASE, MYSQL_USER,
+							MYSQL_PASSWORD);
 				} catch (SQLException ex2) {
 					throw ex2;
 				}

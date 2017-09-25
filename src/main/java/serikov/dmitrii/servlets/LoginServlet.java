@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 	public LoginServlet() {
 		// load JDBC driver
 		if (!DBUtils.loadDriver()) {
-			logger.error("JDBC driver was not loaded correctly");
+			logger.error("JDBC driver was NOT loaded correctly");
 		} else {
 			logger.info("JDBC driver was loaded correctly");
 		}
@@ -38,23 +38,18 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request
-	 *            servlet request
-	 * @param response
-	 *            servlet response
+	 * @param request servlet request
+	 * @param response servlet response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			// set response type to JSON
 			response.setContentType("application/json");
-			HttpSession session = request.getSession(/* false */); // 'false' -
-																	// do not
-																	// create a
-																	// new
-																	// session
-																	// if does
-																	// not exist
+			HttpSession session = request.getSession(/* false */);
+			/*
+			 * 'false' - do not create a new session if does not exist
+			 */
 			// get session remote IP
 			String sessionRemoteIP = (String) session.getAttribute("RemoteIP");
 			if (session.isNew()) {
@@ -85,7 +80,7 @@ public class LoginServlet extends HttpServlet {
 					// update list titles
 					// connect to database
 					List<String> lists = null;
-					logger.info("Attempting to get database connection");
+					logger.info("Attempting to connect to the database");
 					if (DBUtils.connect()) {
 						logger.info("Connection to the database was established");
 						lists = DBUtils.getLists(sessionUsername);
@@ -93,8 +88,11 @@ public class LoginServlet extends HttpServlet {
 						// close the connection
 						DBUtils.disconnect();
 					} else {
-						logger.error("Connection to the database was not established");
-						throw new IOException("LoginServlet cannot connect to the database");
+						// logger.error("Connection to the database was not established");
+						String errorMessage = "LoginServlet cannot connect to the database";
+						logger.error(errorMessage);
+						response.sendError(HttpServletResponse.SC_CONFLICT, "ServerError: " + errorMessage);
+						return;
 					}
 					UserProfile sessionData = (UserProfile) session.getAttribute("Data");
 					if (sessionData == null) {

@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author dmitr
+ * @author Dmitrii Serikov
  */
 public class FileUtils {
     private static final Logger logger = LogManager.getLogger(FileUtils.class);

@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 
 /**
  *
- * @author dmitr
+ * @author Dmitrii Serikov
  */
 public class Utils {
     // Initialize GSON object

@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  *
- * @author dmitr
+ * @author Dmitrii Serikov
  */
 public class UserProfile {
 	private String username;
