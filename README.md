@@ -11,7 +11,7 @@ This is the Lister project migrated to Google Cloud Platform App Engine.
 See the [Google App Engine standard environment documentation][appengine] for more
 detailed instructions.
 
-## [Demo][applink] (Deployed using [Google Cloud Platform][gcloud])
+## [Demo under construction][applink] (Deployed using [Google Cloud Platform][gcloud])
 
 ## Maven
 ### Running locally
