@@ -42,21 +42,27 @@ public class DBUtils {
 	}
 
 	public static boolean connect() {
+		logger.info("Attempting to connect to the database");
+
 		try {
 			// trying to connect to local database
 			try {
 				// Localhost database connection
+				logger.info("Trying local database...");
 				con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/" + MYSQL_DATABASE, "root",
 						"root");
+				logger.info("Connection to the database established");
 			} catch (SQLException ex1) {
 				// trying to connect to remote
 				// (http://lister-advancedlists.rhcloud.com/) database
 				try {
 					// Remote "http://lister-advancedlists.rhcloud.com/"
 					// database connectipn
+					logger.info("Trying remote database at " + MYSQL_CLUSTER_IP + "...");
 					con = DriverManager.getConnection(
 							"jdbc:mysql://" + MYSQL_CLUSTER_IP + ":" + MYSQL_PORT + "/" + MYSQL_DATABASE, MYSQL_USER,
 							MYSQL_PASSWORD);
+					logger.info("Connection to the database established");
 				} catch (SQLException ex2) {
 					throw ex2;
 				}
@@ -64,6 +70,7 @@ public class DBUtils {
 			return true;
 		} catch (Exception e) {
 			// logger.error(errorMesage(e));
+			logger.error("Connection to the database hasn't been established");
 			return false;
 		}
 	}
