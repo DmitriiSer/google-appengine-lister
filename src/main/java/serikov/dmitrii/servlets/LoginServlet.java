@@ -80,15 +80,13 @@ public class LoginServlet extends HttpServlet {
 					// update list titles
 					// connect to database
 					List<String> lists = null;
-					logger.info("Attempting to connect to the database");
+
 					if (DBUtils.connect()) {
-						logger.info("Connection to the database was established");
 						lists = DBUtils.getLists(sessionUsername);
 						logger.info("Retrieving user lists: [" + lists + "]");
 						// close the connection
 						DBUtils.disconnect();
 					} else {
-						// logger.error("Connection to the database was not established");
 						String errorMessage = "LoginServlet cannot connect to the database";
 						logger.error(errorMessage);
 						response.sendError(HttpServletResponse.SC_CONFLICT, "ServerError: " + errorMessage);
@@ -169,9 +167,7 @@ public class LoginServlet extends HttpServlet {
 			// get session timeout in seconds
 			int sessionTimeout = session.getMaxInactiveInterval();
 			// connect to database
-			logger.info("Attempting to get database connection");
 			if (DBUtils.connect()) {
-				logger.info("Connection to the database was established");
 				// check if user with the right credentials from the request
 				// exists
 				if (DBUtils.checkCreds(username, password)) {
@@ -204,10 +200,8 @@ public class LoginServlet extends HttpServlet {
 				// close the connection
 				DBUtils.disconnect();
 			} else {
-				logger.error("Connection to the database was not established");
 				response.sendError(HttpServletResponse.SC_CONFLICT,
 						"ServerError: LoginServlet cannot connect to the database");
-				throw new IOException("LoginServlet cannot connect to the database");
 			}
 		} catch (Exception e) {
 			try {
