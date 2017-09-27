@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import serikov.dmitrii.utils.DBUtils;
 import serikov.dmitrii.utils.Utils;
@@ -23,7 +23,7 @@ import serikov.dmitrii.utils.Utils;
 @SuppressWarnings("serial")
 @WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
-	private static final Logger logger = LogManager.getLogger(LoginServlet.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginServlet.class);
 
 	//
 	public LoginServlet() {

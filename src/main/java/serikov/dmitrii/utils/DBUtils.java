@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import serikov.dmitrii.servlets.UserProfile;
 
@@ -19,7 +19,7 @@ import serikov.dmitrii.servlets.UserProfile;
  * @author Dmitrii Serikov
  */
 public class DBUtils {
-	private static final Logger logger = LogManager.getLogger(DBUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(DBUtils.class);
 
 	private final static String MYSQL_CLUSTER_IP = System.getenv("MYSQL_CLUSTER_IP");
 	private final static String MYSQL_DATABASE = System.getenv("MYSQL_DATABASE");

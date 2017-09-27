@@ -7,8 +7,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -29,7 +29,7 @@ public class Utils {
         return stackTraceStringBuilder.toString();
     }
     public static void sendResponse(String callerClassName, HttpServletResponse response, Object obj) throws IOException {
-        Logger logger = LogManager.getLogger(callerClassName);
+        Logger logger = LoggerFactory.getLogger(callerClassName);
         PrintWriter responsePrintWriter = response.getWriter();
         String responseString = gson.toJson(obj);
         logger.info("Server sent response: " + responseString);
@@ -73,8 +73,8 @@ public class Utils {
                 }
             }
         } catch (IOException e) {
-            Logger logger = LogManager.getLogger(callerClassName);
-            logger.error(e);
+            Logger logger = LoggerFactory.getLogger(callerClassName);
+            logger.error(e.toString());
         }
         return obj;
     }

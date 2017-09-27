@@ -62,7 +62,15 @@
 			<version>2.8.2</version>
 		</dependency>
 
-		<!-- log4j 2.x -->
+		<!-- SLF4J JDK Binding -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.25</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- log4j 2.x
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -79,7 +87,7 @@
 			<version>2.5</version>
 			<scope>runtime</scope>
 		</dependency>
-
+		-->
 		<!-- Test Dependencies -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>

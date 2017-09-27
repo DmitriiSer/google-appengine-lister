@@ -11,15 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Dmitrii Serikov
  */
 public class FileUtils {
-    private static final Logger logger = LogManager.getLogger(FileUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
     private static String currentDirectory;
     private static final Charset charset = Charset.forName("UTF-8");
 
