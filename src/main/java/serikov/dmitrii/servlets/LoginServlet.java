@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import serikov.dmitrii.utils.DBUtils;
-import serikov.dmitrii.utils.LoggerFactory;
 import serikov.dmitrii.utils.Logger;
+import serikov.dmitrii.utils.LoggerFactory;
+import serikov.dmitrii.utils.PropertyUtils;
 import serikov.dmitrii.utils.Utils;
 
 /**
@@ -24,21 +26,28 @@ import serikov.dmitrii.utils.Utils;
 public class LoginServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(LoginServlet.class);
 
-	//
-	public LoginServlet() {
+	@Override
+	public void init() throws ServletException {
+		// load app properties
+		PropertyUtils.loadAppProperties(getServletContext());
+
 		// load JDBC driver
 		if (!DBUtils.loadDriver()) {
 			logger.error("JDBC driver was NOT loaded correctly");
 		} else {
 			logger.info("JDBC driver was loaded correctly");
 		}
+
+		super.init();
 	}
 
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request servlet request
-	 * @param response servlet response
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
