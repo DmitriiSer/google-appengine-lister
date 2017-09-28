@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import serikov.dmitrii.servlets.UserProfile;
+import serikov.dmitrii.model.UserProfile;
 
 /**
  * @author Dmitrii Serikov
@@ -42,7 +42,7 @@ public class DBUtils {
 
 	private static boolean connectToRemoteDB() {
 		// get app properties
-		Map<String, String> appProperties = PropertyUtils.readAppProperties();
+		Map<String, String> appProperties = PropertyUtils.getAppProperties();
 		String MYSQL_CLUSTER_IP = appProperties.get("MYSQL_CLUSTER_IP");
 		String MYSQL_DATABASE = appProperties.get("MYSQL_DATABASE");
 		String MYSQL_USER = appProperties.get("MYSQL_USER");
