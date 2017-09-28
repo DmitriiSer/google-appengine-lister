@@ -1,4 +1,4 @@
-package serikov.dmitrii;
+/*package serikov.dmitrii;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Unit tests for {@link HelloAppEngine}.
- */
+ *
 @RunWith(JUnit4.class)
 public class HelloAppEngineTest {
   private static final String FAKE_URL = "fake.fk/hello";
@@ -70,3 +70,4 @@ public class HelloAppEngineTest {
       .containsMatch("^Version:\\s+.+OS:\\s+.+User:\\s");
   }
 }
+*/

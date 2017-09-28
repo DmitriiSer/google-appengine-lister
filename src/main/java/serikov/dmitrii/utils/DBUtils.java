@@ -10,9 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import serikov.dmitrii.servlets.UserProfile;
 
 /**
@@ -30,6 +27,9 @@ public class DBUtils {
 	private static Connection con = null;
 
 	public static boolean loadDriver() {
+		logger.info("DBUtils.loadDriver():");
+		logger.info("MYSQL_CLUSTER_IP: " + MYSQL_CLUSTER_IP);
+		logger.info("MYSQL_DATABASE: " + MYSQL_DATABASE);
 		// The newInstance() call is a work around for some
 		// broken Java implementations
 		try {
@@ -45,32 +45,33 @@ public class DBUtils {
 		logger.info("Attempting to connect to the database");
 
 		try {
-			// trying to connect to local database
 			try {
-				// Localhost database connection
-				logger.info("Trying local database...");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/" + MYSQL_DATABASE, "root",
-						"root");
+				// trying to connect to the remote database
+				logger.info("Trying remote database at " + MYSQL_CLUSTER_IP + "...");
+				con = DriverManager.getConnection(
+						"jdbc:mysql://" + MYSQL_CLUSTER_IP + ":" + MYSQL_PORT + "/" + MYSQL_DATABASE, MYSQL_USER,
+						MYSQL_PASSWORD);
 				logger.info("Connection to the database established");
 			} catch (SQLException ex1) {
-				// trying to connect to remote
-				// (http://lister-advancedlists.rhcloud.com/) database
+				logger.error("Connection to the remote database hasn't been established");
+				logger.error(ex1.toString());
+				
 				try {
-					// Remote "http://lister-advancedlists.rhcloud.com/"
-					// database connectipn
-					logger.info("Trying remote database at " + MYSQL_CLUSTER_IP + "...");
-					con = DriverManager.getConnection(
-							"jdbc:mysql://" + MYSQL_CLUSTER_IP + ":" + MYSQL_PORT + "/" + MYSQL_DATABASE, MYSQL_USER,
-							MYSQL_PASSWORD);
+					// trying to connect to the local database
+					logger.info("Trying local database...");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/" + MYSQL_DATABASE,
+							"root", "root");
 					logger.info("Connection to the database established");
 				} catch (SQLException ex2) {
 					throw ex2;
 				}
 			}
+
 			return true;
 		} catch (Exception e) {
 			// logger.error(errorMesage(e));
 			logger.error("Connection to the database hasn't been established");
+			logger.error(e.toString());
 			return false;
 		}
 	}

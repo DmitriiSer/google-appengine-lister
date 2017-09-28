@@ -8,6 +8,7 @@
 	<artifactId>google-appengine-lister</artifactId>
 
 	<properties>
+		<appengine.target.version>1.9.56</appengine.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -25,7 +26,7 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.9.56</version>
+			<version>${appengine.target.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -62,12 +63,12 @@
 			<version>2.8.2</version>
 		</dependency>
 
-		<!-- SLF4J JDK Binding -->
+		<!-- SLF4J JDK Binding -
 		<dependency>
     		<groupId>org.slf4j</groupId>
     		<artifactId>slf4j-jdk14</artifactId>
     		<version>1.8.0-alpha2</version>
-		</dependency>
+		</dependency>-->
 
 		<!-- log4j 2.x
 		<dependency>
@@ -91,20 +92,20 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
-			<version>1.9.56</version>
+			<version>${appengine.target.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-stubs</artifactId>
-			<version>1.9.56</version>
+			<version>${appengine.target.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-tools-sdk</artifactId>
-			<version>1.9.56</version>
+			<version>${appengine.target.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -136,7 +137,7 @@
 			<plugin>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
-				<version>1.9.56</version>
+				<version>${appengine.target.version}</version>
 				<configuration>
 					<appId>hybrid-shelter-180902</appId> <!-- Override appengine-web.xml <project> -->
 					<version>1</version>
@@ -233,4 +234,21 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!--
+	<pluginRepositories>
+    	<pluginRepository>
+	        <id>google-snapshots</id>
+	        <name>Google Snapshots</name>
+	        <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
+	        <snapshots>
+	            <enabled>true</enabled>
+	        </snapshots>
+	        <releases>
+	            <enabled>false</enabled>
+	        </releases>
+	    </pluginRepository>
+	</pluginRepositories>
+	-->
+	
 </project>
