@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import serikov.dmitrii.servlets.UserProfile;
 
@@ -40,11 +41,12 @@ public class DBUtils {
 	}
 
 	private static boolean connectToRemoteDB() {
-		// get environment variables
-		String MYSQL_CLUSTER_IP = System.getenv("MYSQL_CLUSTER_IP");
-		String MYSQL_DATABASE = System.getenv("MYSQL_DATABASE");
-		String MYSQL_USER = System.getenv("MYSQL_USER");
-		String MYSQL_PASSWORD = System.getenv("MYSQL_PASSWORD");
+		// get app properties
+		Map<String, String> appProperties = PropertyUtils.readAppProperties();
+		String MYSQL_CLUSTER_IP = appProperties.get("MYSQL_CLUSTER_IP");
+		String MYSQL_DATABASE = appProperties.get("MYSQL_DATABASE");
+		String MYSQL_USER = appProperties.get("MYSQL_USER");
+		String MYSQL_PASSWORD = appProperties.get("MYSQL_PASSWORD");
 
 		StringBuilder url = new StringBuilder();
 		if (MYSQL_CLUSTER_IP != null) {
@@ -78,7 +80,7 @@ public class DBUtils {
 	}
 
 	public static boolean connect() {
-		return connect(Arrays.asList(ConnectionType.REMOTE_DB, ConnectionType.LOCAL_DB));
+		return connect(Arrays.asList(ConnectionType.REMOTE_DB));
 	}
 
 	public static boolean connect(List<ConnectionType> order) {
