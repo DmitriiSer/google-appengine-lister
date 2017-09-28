@@ -20,7 +20,7 @@ import serikov.dmitrii.model.UserProfile;
 public class DBUtils {
 	private static final Logger logger = LoggerFactory.getLogger(DBUtils.class);
 
-	private final static String MYSQL_PORT = "3306";
+	private final static String DEFAULT_MYSQL_PORT = "3306";
 
 	private static Connection con = null;
 
@@ -45,12 +45,16 @@ public class DBUtils {
 		Map<String, String> appProperties = PropertyUtils.getAppProperties();
 		String MYSQL_CLUSTER_IP = appProperties.get("MYSQL_CLUSTER_IP");
 		String MYSQL_DATABASE = appProperties.get("MYSQL_DATABASE");
+		String MYSQL_PORT = appProperties.get("MYSQL_PORT");
+		if (MYSQL_PORT == null) {
+			MYSQL_PORT = DEFAULT_MYSQL_PORT;
+		}
 		String MYSQL_USER = appProperties.get("MYSQL_USER");
 		String MYSQL_PASSWORD = appProperties.get("MYSQL_PASSWORD");
 
 		StringBuilder url = new StringBuilder();
 		if (MYSQL_CLUSTER_IP != null) {
-			logger.info("Trying remote database at " + MYSQL_CLUSTER_IP + "...");
+			logger.info("Trying to connect to remote database at " + MYSQL_CLUSTER_IP + "...");
 
 			url.append("jdbc:mysql://").append(MYSQL_CLUSTER_IP).append(":").append(MYSQL_PORT).append("/")
 					.append(MYSQL_DATABASE).append("?verifyServerCertificate=false").append("&useSSL=true")
@@ -68,8 +72,8 @@ public class DBUtils {
 	}
 
 	private static boolean connectToLocalDB() {
-		logger.info("Trying local database...");
-		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/lister", "root",
+		logger.info("Trying to connect to local database...");
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:" + DEFAULT_MYSQL_PORT + "/lister", "root",
 				"root")) {
 			logger.info("Connection to the database established");
 			return true;
