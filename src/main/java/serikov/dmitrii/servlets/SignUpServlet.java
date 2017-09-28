@@ -3,12 +3,14 @@ package serikov.dmitrii.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import serikov.dmitrii.model.UserProfile;
 import serikov.dmitrii.utils.DBUtils;
 import serikov.dmitrii.utils.LoggerFactory;
 import serikov.dmitrii.utils.Logger;
@@ -23,22 +25,23 @@ import serikov.dmitrii.utils.Utils;
 public class SignUpServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(SignUpServlet.class);
 
-	public SignUpServlet() {
+	@Override
+	public void init() throws ServletException {
 		// load JDBC driver
 		if (!DBUtils.loadDriver()) {
 			logger.error("JDBC driver was not loaded correctly");
 		} else {
 			logger.info("JDBC driver was loaded correctly");
 		}
+		
+		super.init();
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request
-	 *            servlet request
-	 * @param response
-	 *            servlet response
+	 * @param request servlet request
+	 * @param response servlet response
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {

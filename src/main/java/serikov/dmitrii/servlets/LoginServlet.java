@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import serikov.dmitrii.model.UserProfile;
 import serikov.dmitrii.utils.DBUtils;
 import serikov.dmitrii.utils.Logger;
 import serikov.dmitrii.utils.LoggerFactory;

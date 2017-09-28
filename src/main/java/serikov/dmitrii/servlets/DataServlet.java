@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import serikov.dmitrii.model.UserList;
+import serikov.dmitrii.model.UserProfile;
 import serikov.dmitrii.utils.DBUtils;
 import serikov.dmitrii.utils.FileUtils;
 import serikov.dmitrii.utils.LoggerFactory;
@@ -26,14 +29,17 @@ import serikov.dmitrii.utils.Utils;
 public class DataServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(DataServlet.class);
 	private String currentDirectory = null;
-
-	public DataServlet() {
+	
+	@Override
+	public void init() throws ServletException {
 		// load JDBC driver
 		if (!DBUtils.loadDriver()) {
 			logger.error("JDBC driver was not loaded correctly");
 		} else {
 			logger.info("JDBC driver was loaded correctly");
 		}
+		
+		super.init();
 	}
 
 	private void checkCurrentDirectory(HttpServletRequest request) throws IOException {
