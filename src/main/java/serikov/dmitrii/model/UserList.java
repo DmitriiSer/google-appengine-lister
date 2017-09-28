@@ -1,4 +1,4 @@
-package serikov.dmitrii.servlets;
+package serikov.dmitrii.model;
 
 /**
  *
