@@ -2,7 +2,7 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<groupId>serikov.dmitrii</groupId>
 	<artifactId>google-appengine-lister</artifactId>
