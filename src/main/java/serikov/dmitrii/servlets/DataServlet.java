@@ -112,10 +112,10 @@ public class DataServlet extends HttpServlet {
 						logger.info(
 								"Attempt to remove a record in the database and a file referenced to that record with list["
 										+ paramListname + "] data");
-						if ((DBUtils.removeList(sessionUsername, paramListname, sessionData.lists.size()))
+						if ((DBUtils.removeList(sessionUsername, paramListname, sessionData.getListsSize()))
 								&& (FileUtils.removeListFile("/data/" + sessionUsername + "_" + paramListname + ".dt"))
 								&& (sessionData.removeList(paramListname))) {
-							logger.info("sessionData.lists = " + sessionData.lists.toString());
+							logger.info("sessionData.lists = " + sessionData.getLists().toString());
 							logger.info("The record in the database and the file were removed");
 							Utils.sendResponse(DataServlet.class.getName(), response,
 									"list with name '" + paramListname + "' was deleted");
@@ -193,7 +193,7 @@ public class DataServlet extends HttpServlet {
 									"Attempt to create a record in the database and a file referenced to that record with list["
 											+ paramListname + "] data");
 							UserProfile sessionData = (UserProfile) session.getAttribute("Data");
-							if (DBUtils.createList(sessionUsername, paramListname, sessionData.lists.size())
+							if (DBUtils.createList(sessionUsername, paramListname, sessionData.getListsSize())
 									&& FileUtils
 											.createListFile("/data/" + sessionUsername + "_" + paramListname + ".dt")) {
 								logger.info("The record in the database and the file were created");
@@ -202,7 +202,7 @@ public class DataServlet extends HttpServlet {
 									// set list content
 									FileUtils.setFileContent(DataRef, listContent);
 									//
-									sessionData.lists.add(paramListname);
+									sessionData.getLists().add(paramListname);
 									// UserList userList = new
 									// UserList(paramListname, "{}",
 									// UserList.CREATED_BY_SERVER);
@@ -260,16 +260,16 @@ public class DataServlet extends HttpServlet {
 						List<String> newLists = new ArrayList<>();
 						for (int i = 0; i < listOrderIndexes.size(); i++) {
 							int listOrderIndex = listOrderIndexes.indexOf(Integer.toString(i));
-							String newListElement = sessionData.lists.get(listOrderIndex);
+							String newListElement = sessionData.getLists().get(listOrderIndex);
 							newLists.add(newListElement);
 						}
-						logger.info("prev lists: " + sessionData.lists.toString());
+						logger.info("prev lists: " + sessionData.getLists().toString());
 						logger.info("new  lists: " + newLists.toString());
 						// reorder lists in the database
-						DBUtils.changeListsOrder(sessionUsername, sessionData.lists, listOrderIndexes);
+						DBUtils.changeListsOrder(sessionUsername, sessionData.getLists(), listOrderIndexes);
 						// overwrite session data
-						sessionData.lists.clear();
-						sessionData.lists.addAll(newLists);
+						sessionData.getLists().clear();
+						sessionData.getLists().addAll(newLists);
 
 						Utils.sendResponse(DataServlet.class.getName(), response, sessionData);
 					} // wrong request
