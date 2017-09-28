@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import serikov.dmitrii.servlets.UserProfile;
@@ -18,18 +19,15 @@ import serikov.dmitrii.servlets.UserProfile;
 public class DBUtils {
 	private static final Logger logger = LoggerFactory.getLogger(DBUtils.class);
 
-	private final static String MYSQL_CLUSTER_IP = System.getenv("MYSQL_CLUSTER_IP");
-	private final static String MYSQL_DATABASE = System.getenv("MYSQL_DATABASE");
 	private final static String MYSQL_PORT = "3306";
-	private final static String MYSQL_USER = System.getenv("MYSQL_USER");
-	private final static String MYSQL_PASSWORD = System.getenv("MYSQL_PASSWORD");
 
 	private static Connection con = null;
 
+	public static enum ConnectionType {
+		REMOTE_DB, LOCAL_DB
+	}
+
 	public static boolean loadDriver() {
-		logger.info("DBUtils.loadDriver():");
-		logger.info("MYSQL_CLUSTER_IP: " + MYSQL_CLUSTER_IP);
-		logger.info("MYSQL_DATABASE: " + MYSQL_DATABASE);
 		// The newInstance() call is a work around for some
 		// broken Java implementations
 		try {
@@ -41,39 +39,68 @@ public class DBUtils {
 		}
 	}
 
+	private static boolean connectToRemoteDB() {
+		// get environment variables
+		String MYSQL_CLUSTER_IP = System.getenv("MYSQL_CLUSTER_IP");
+		String MYSQL_DATABASE = System.getenv("MYSQL_DATABASE");
+		String MYSQL_USER = System.getenv("MYSQL_USER");
+		String MYSQL_PASSWORD = System.getenv("MYSQL_PASSWORD");
+
+		StringBuilder url = new StringBuilder();
+		if (MYSQL_CLUSTER_IP != null) {
+			logger.info("Trying remote database at " + MYSQL_CLUSTER_IP + "...");
+
+			url.append("jdbc:mysql://").append(MYSQL_CLUSTER_IP).append(":").append(MYSQL_PORT).append("/")
+					.append(MYSQL_DATABASE).append("?verifyServerCertificate=false").append("&useSSL=true")
+					.append("&requireSSL=true");
+			try (Connection con = DriverManager.getConnection(url.toString(), MYSQL_USER, MYSQL_PASSWORD)) {
+				logger.info("Connection to the database established");
+				return true;
+			} catch (SQLException e) {
+				logger.error("Connection to the database hasn't been established");
+			}
+		} else {
+			logger.info("Cluster IP is not defined...");
+		}
+		return false;
+	}
+
+	private static boolean connectToLocalDB() {
+		logger.info("Trying local database...");
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/lister", "root",
+				"root")) {
+			logger.info("Connection to the database established");
+			return true;
+		} catch (SQLException ex2) {
+			logger.error("Connection to the database hasn't been established");
+		}
+		return false;
+	}
+
 	public static boolean connect() {
+		return connect(Arrays.asList(ConnectionType.REMOTE_DB, ConnectionType.LOCAL_DB));
+	}
+
+	public static boolean connect(List<ConnectionType> order) {
 		logger.info("Attempting to connect to the database");
 
-		try {
-			try {
-				// trying to connect to the remote database
-				logger.info("Trying remote database at " + MYSQL_CLUSTER_IP + "...");
-				con = DriverManager.getConnection(
-						"jdbc:mysql://" + MYSQL_CLUSTER_IP + ":" + MYSQL_PORT + "/" + MYSQL_DATABASE, MYSQL_USER,
-						MYSQL_PASSWORD);
-				logger.info("Connection to the database established");
-			} catch (SQLException ex1) {
-				logger.error("Connection to the remote database hasn't been established");
-				logger.error(ex1.toString());
-				
-				try {
+		if (order != null) {
+			boolean result = false;
+			for (ConnectionType connectionType : order) {
+				switch (connectionType) {
+				case REMOTE_DB:
+					// trying to connect to the remote database
+					result = connectToRemoteDB();
+					break;
+				case LOCAL_DB:
 					// trying to connect to the local database
-					logger.info("Trying local database...");
-					con = DriverManager.getConnection("jdbc:mysql://localhost:" + MYSQL_PORT + "/" + MYSQL_DATABASE,
-							"root", "root");
-					logger.info("Connection to the database established");
-				} catch (SQLException ex2) {
-					throw ex2;
+					result = connectToLocalDB();
+					break;
 				}
 			}
-
-			return true;
-		} catch (Exception e) {
-			// logger.error(errorMesage(e));
-			logger.error("Connection to the database hasn't been established");
-			logger.error(e.toString());
-			return false;
+			return result;
 		}
+		return false;
 	}
 
 	public static void disconnect() {
