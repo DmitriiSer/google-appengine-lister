@@ -1,5 +1,6 @@
 package serikov.dmitrii.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,8 @@ public class UserProfile {
 	private String avatar;
 	private boolean loggedIn;
 	private int timeout;
-	List<String> lists;
+
+	private List<String> lists;
 
 	//
 	public UserProfile() {
@@ -61,6 +63,20 @@ public class UserProfile {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public int getListsSize() {
+		if (lists != null) {
+			return lists.size();
+		}
+		return 0;
+	}
+
+	public List<String> getLists() {
+		if (lists == null) {
+			lists = new ArrayList<>();
+		}
+		return lists;
 	}
 
 	public void setListTitles(List<String> lists) {
